@@ -1,6 +1,7 @@
 import react, {Component} from 'react';
 import './App.css';
 import Form from './components/Form';
+import axios from 'axios';
 
 class App extends Component {
 
@@ -13,18 +14,30 @@ state = {
   temp: '',
   pressure: '',
   wind: '',
-  erro: ''
+  erro: '',
+  persons: []
 }
+componentDidMount() {
+  axios.get(`https://api.openweathermap.org/data/2.5/weather?q=London&appid=d7b3751077889d54b180636f32444101`)
+  .then(resp => console.log(resp.data))
+    .catch(err => console.log(err))
+}
+ 
 
 
 handleCitySubmit = e =>{
   e.preventDefault()
-  const API = `api.openweathermap.org/data/2.5/weather?q=${this.state.value}&appid=add09926832f15baef58a06605d34726&units=metric`;
- 
-  fetch(API)
+  const API = `api.openweathermap.org/data/2.5/weather?q=${this.state.value}&appid=d7b3751077889d54b180636f32444101&units=metric`;
+  const APIS = `api.openweathermap.org/data/2.5/weather?q=London&appid=d7b3751077889d54b180636f32444101`;
+  fetch(APIS, {
+    headers : { 
+      'Content-Type': 'application/json',
+     }
+
+  })
   .then(resp => {
     if(resp.ok){
-      return resp
+      return resp;
     }
     throw Error("Błąd")
   })
@@ -41,12 +54,18 @@ handleInputChange = (e) =>{
 }
   render(){
   return (
+    <>
     <div className="App">
         <Form value={this.props.value} 
         change={this.handleInputChange} 
         submit={this.handleCitySubmit}
         />
     </div>
+     
+        <ul>
+          { this.state.persons.map(person => <li>{person.name}</li>)}
+        </ul>
+     </>
   );
 }
 }

@@ -1,6 +1,7 @@
 import react, {Component} from 'react';
 import './App.css';
 import Form from './components/Form';
+import Result from './components/Result';
 import axios from 'axios';
 
 class App extends Component {
@@ -14,8 +15,7 @@ state = {
   temp: '',
   pressure: '',
   wind: '',
-  erro: '',
-  weatchers: []
+  erro: false,
 }
 
 handleCitySubmit = (e) =>{
@@ -23,11 +23,15 @@ handleCitySubmit = (e) =>{
   const API =`https://api.openweathermap.org/data/2.5/weather?q=${this.state.value}&appid=d7b3751077889d54b180636f32444101`;
   axios.get(API)
   .then(res => {
-    const weatcher = res.data;
+    const weatchers = res.data;
     console.log(res.data)
-    this.setState({ weatcher })
+    this.setState({ erro: false })
   })
-    .catch(err => console.log(err))
+  .catch(err => 
+      this.setState({
+        erro:true
+      })
+    )
 }
 handleInputChange = (e) =>{
   this.setState({
@@ -41,6 +45,7 @@ handleInputChange = (e) =>{
         change={this.handleInputChange} 
         submit={this.handleCitySubmit}
         />
+        <Result error={this.state.erro} />
     </div> 
   );
 }

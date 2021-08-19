@@ -20,16 +20,27 @@ state = {
 
 handleCitySubmit = (e) =>{
   e.preventDefault()
-  const API =`https://api.openweathermap.org/data/2.5/weather?q=${this.state.value}&appid=d7b3751077889d54b180636f32444101`;
+  const API =`https://api.openweathermap.org/data/2.5/weather?q=${this.state.value}&appid=d7b3751077889d54b180636f32444101&units=metric`;
   axios.get(API)
   .then(res => {
     const weatchers = res.data;
     console.log(res.data)
-    this.setState({ erro: false })
+    const time = new Date().toLocaleString();
+    this.setState({ 
+      erro: false,
+      date: time,
+      sunrise: weatchers.sys.sunrise,
+      sunset: weatchers.sys.sunset,
+      temp: weatchers.main.temp,
+      pressure: weatchers.main.pressure,
+      wind: weatchers.wind.speed,
+      city: this.state.value
+    })
   })
   .catch(err => 
       this.setState({
-        erro:true
+        erro:true,
+        city: this.state.value
       })
     )
 }
@@ -45,7 +56,7 @@ handleInputChange = (e) =>{
         change={this.handleInputChange} 
         submit={this.handleCitySubmit}
         />
-        <Result error={this.state.erro} />
+        <Result weatcher={this.state} />
     </div> 
   );
 }

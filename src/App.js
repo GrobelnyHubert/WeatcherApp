@@ -18,17 +18,26 @@ state = {
   erro: false,
 }
 
+dateBuilder = (d) =>{
+  let months = ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"];
+  let days = ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"];
+
+  let day = days[d.getDay()];
+  let date = d.getDate();
+  let month = months[d.getMonth()];
+  let year = d.getFullYear();
+
+  return `${day} ${date} ${month} ${year}`
+}
+
 handleCitySubmit = (e) =>{
   e.preventDefault()
   const API =`https://api.openweathermap.org/data/2.5/weather?q=${this.state.value}&appid=d7b3751077889d54b180636f32444101&units=metric`;
   axios.get(API)
   .then(res => {
     const weatchers = res.data;
-    console.log(res.data)
-    const time = new Date().toLocaleString();
     this.setState({ 
       erro: false,
-      date: time,
       sunrise: weatchers.sys.sunrise,
       sunset: weatchers.sys.sunset,
       temp: weatchers.main.temp,
@@ -51,12 +60,14 @@ handleInputChange = (e) =>{
 }
   render(){
   return (
-    <div className="App">
-        <Form value={this.props.value} 
-        change={this.handleInputChange} 
-        submit={this.handleCitySubmit}
-        />
-        <Result weatcher={this.state} />
+    <div className="app">
+      <main>
+          <Form value={this.props.value} 
+          change={this.handleInputChange} 
+          submit={this.handleCitySubmit}
+          />
+          <Result weatcher={this.state} dateTime={this.dateBuilder}/>
+        </main>
     </div> 
   );
 }

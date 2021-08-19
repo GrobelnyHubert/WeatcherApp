@@ -2,7 +2,6 @@ import React from 'react';
 
 const Result = props => {
     const {
-    date,
     city,
     sunrise,
     sunset,
@@ -10,6 +9,7 @@ const Result = props => {
     pressure,
     wind,
     erro,} = props.weatcher;
+    const dateBuilder = props.dateTime;
 
     let content = null;
 
@@ -20,12 +20,12 @@ const Result = props => {
         content = (
             <div>
                 <p>Wyniki wyszukiwania dla <em>{city}</em></p>
-                <p>Dane dla dnia i godziny: {date}</p>
                 <p>Aktualna temperatura {temp} &#176;C</p>
                 <p>Wschód słońca dzisiaj o {sunsetTime}</p>
                 <p>Zachód słońca dzisiaj o {sunriseTime}</p>
                 <p>Siła wiatru {wind} m/s</p>
                 <p>Aktualne ciśnienie {pressure} hPa</p>
+                <p>{dateBuilder(new Date())}</p>
             </div>
         )
     }

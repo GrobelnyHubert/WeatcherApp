@@ -20,7 +20,7 @@ state = {
 
 dateBuilder = (d) =>{
   let months = ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"];
-  let days = ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"];
+  let days = ["Niedziela","Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"];
 
   let day = days[d.getDay()];
   let date = d.getDate();
@@ -38,8 +38,6 @@ handleCitySubmit = (e) =>{
     const weatchers = res.data;
     this.setState({ 
       erro: false,
-      sunrise: weatchers.sys.sunrise,
-      sunset: weatchers.sys.sunset,
       temp: weatchers.main.temp,
       pressure: weatchers.main.pressure,
       wind: weatchers.wind.speed,
@@ -60,7 +58,7 @@ handleInputChange = (e) =>{
 }
   render(){
   return (
-    <div className="app">
+    <div className={this.state.temp > 16 ? 'app' : 'app cold'}>
       <main>
           <Form value={this.props.value} 
           change={this.handleInputChange} 

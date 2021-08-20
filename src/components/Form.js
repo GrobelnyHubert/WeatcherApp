@@ -11,7 +11,6 @@ const Form = props => {
                 onChange={props.change}
                 className="search-bar"
                 />
-                <button type="submit">Wyszukaj miasto</button>
             </form>
         </div>
      );

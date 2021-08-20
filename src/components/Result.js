@@ -1,10 +1,9 @@
 import React from 'react';
+import './Result.css';
 
 const Result = props => {
     const {
     city,
-    sunrise,
-    sunset,
     temp,
     pressure,
     wind,
@@ -14,18 +13,20 @@ const Result = props => {
     let content = null;
 
     if(!erro && city){
-        const sunriseTime = new Date(sunrise * 1000).toLocaleString();
-        const sunsetTime = new Date(sunset * 1000).toLocaleString();
-
+        
         content = (
-            <div>
-                <p>Wyniki wyszukiwania dla <em>{city}</em></p>
-                <p>Aktualna temperatura {temp} &#176;C</p>
-                <p>Wschód słońca dzisiaj o {sunsetTime}</p>
-                <p>Zachód słońca dzisiaj o {sunriseTime}</p>
-                <p>Siła wiatru {wind} m/s</p>
-                <p>Aktualne ciśnienie {pressure} hPa</p>
-                <p>{dateBuilder(new Date())}</p>
+            <div className="content">
+                <div className="location-box">
+                    <div className="location"><em>{city}</em></div>
+                    <div className="date">{dateBuilder(new Date())}</div>
+                </div>
+                <div className="weatcher-box">
+                  <div className="temp">{Math.round(temp)} &#176;C</div>
+                  <div className="weatcher">Sunny</div>
+                  <div className="pressure">{pressure} hPa</div>
+                  <div className="wind">{wind} m/s</div>
+                </div>
+                
             </div>
         )
     }

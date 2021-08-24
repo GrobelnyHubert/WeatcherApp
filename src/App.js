@@ -16,6 +16,8 @@ state = {
   pressure: '',
   wind: '',
   erro: false,
+  icon: '',
+  description: ''
 }
 
 dateBuilder = (d) =>{
@@ -32,16 +34,21 @@ dateBuilder = (d) =>{
 
 handleCitySubmit = (e) =>{
   e.preventDefault()
-  const API =`https://api.openweathermap.org/data/2.5/weather?q=${this.state.value}&appid=d7b3751077889d54b180636f32444101&units=metric`;
+  const API =`https://api.openweathermap.org/data/2.5/weather?q=${this.state.value}&appid=d7b3751077889d54b180636f32444101&units=metric&lang=pl`;
+  const ApiDay = `https://api.openweathermap.org/data/2.5/forecast?q=${this.state.value}&appid=d7b3751077889d54b180636f32444101&units=metric&lang=pl`;
+  const ApiDaily = `https://api.openweathermap.org/data/2.5/onecall?lat=33.44&lon=-94.04&appid=d7b3751077889d54b180636f32444101&units=metric&lang=pl`
   axios.get(API)
   .then(res => {
     const weatchers = res.data;
+    console.log(res.data);
     this.setState({ 
       erro: false,
       temp: weatchers.main.temp,
       pressure: weatchers.main.pressure,
       wind: weatchers.wind.speed,
-      city: this.state.value
+      city: this.state.value,
+      icon: weatchers.weather[0].icon,
+      description: weatchers.weather[0].description,
     })
   })
   .catch(err => 

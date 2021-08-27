@@ -41,8 +41,9 @@ handleCitySubmit = (e) =>{
   
   this.handleSendRequestCity()
 
+
 }
-handleSendRequestCity =  async () => {
+handleSendRequestCity =  () => {
   const API =`https://api.openweathermap.org/data/2.5/weather?q=${this.state.value}&appid=d7b3751077889d54b180636f32444101&units=metric&lang=pl`;
   try {
     axios.get(API)
@@ -56,6 +57,13 @@ handleSendRequestCity =  async () => {
         },
       })
     })
+    .then( (response) =>{
+      const ApiLat = `https://api.openweathermap.org/data/2.5/onecall?lat=${this.state.coord.lat}&lon=${this.state.coord.lon}&exclude=minutely,alerts&appid=d7b3751077889d54b180636f32444101&units=metric&lang=pl`;
+      axios.get(ApiLat)
+        .then(res =>{
+          console.log(res.data)
+        })
+    })
    
     .catch(err => 
         this.setState({
@@ -68,13 +76,7 @@ handleSendRequestCity =  async () => {
       console.error(err);
   }
 };
-handleGetApiData = () =>{
-  const ApiLat = `https://api.openweathermap.org/data/2.5/onecall?lat=${this.state.coord.lat}&lon=${this.state.coord.lon}&exclude=minutely,alerts&appid=d7b3751077889d54b180636f32444101&units=metric&lang=pl`
-  axios.get(ApiLat)
-  .then(res =>{
-    console.log(res)
-  })
-}
+
 handleInputChange = (e) =>{
   this.setState({
     value: e.target.value
@@ -84,6 +86,7 @@ handleInputChange = (e) =>{
   return (
     <div className={this.state.temp > 16 ? 'app' : 'app cold'}>
       <main>
+        
           <Form value={this.props.value} 
           change={this.handleInputChange} 
           submit={this.handleCitySubmit}

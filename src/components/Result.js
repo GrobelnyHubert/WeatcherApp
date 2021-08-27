@@ -9,19 +9,21 @@ const Result = props => {
     wind,
     erro,
     icon,
-    description
+    description,
+    coord
 } = props.weatcher;
     const dateBuilder = props.dateTime;
 
     let content = null;
 
 
-
-    if(!erro && city){
+    if(!erro ){
         const iconSrc = `http://openweathermap.org/img/wn/${icon}@2x.png`
        
         content = (
+        
             <div className="content">
+                {coord.lat}
                 <div className="location-box">
                     <div className="location"><em>{city}</em></div>
                     <div className="date">{dateBuilder(new Date())}</div>

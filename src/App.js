@@ -19,11 +19,11 @@ const responsive = {
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
-      items: 3
+      items: 2
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 2
+      items: 1
     }
   };
 class App extends Component {
@@ -121,19 +121,22 @@ formatDayCards = () => {
   
   <DayCard dateTime={this.dateBuilder} reading={reading} key={index} />)
 }
+
   render(){
   return (
     <div className={this.state.temp > 16 ? 'app' : 'app cold'}>
       <main>
-        
+        <div className="container">
           <Form value={this.props.value} 
           change={this.handleInputChange} 
           submit={this.handleCitySubmit}
           />
           <Result weatcher={this.state} dateTime={this.dateBuilder}/>
-          <Carousel   responsive={responsive}>
-          {this.formatDayCards()}
-          </Carousel>
+          {this.state.city && this.state.erro === false ? 
+           <Carousel   responsive={responsive}>
+            {this.formatDayCards()}
+            </Carousel>: ''}
+          </div>
         </main>
     </div> 
   );

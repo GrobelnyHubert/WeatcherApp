@@ -1,6 +1,7 @@
 import React from 'react';
 import './Result.css';
 
+
 const Result = props => {
     const {
     city,
@@ -9,21 +10,19 @@ const Result = props => {
     wind,
     erro,
     icon,
-    description,
-    coord
+    description
 } = props.weatcher;
     const dateBuilder = props.dateTime;
 
     let content = null;
-
-
-    if(!erro ){
+   
+    if(!erro && city ){
         const iconSrc = `http://openweathermap.org/img/wn/${icon}@2x.png`
        
         content = (
         
             <div className="content">
-                {coord.lat}
+             
                 <div className="location-box">
                     <div className="location"><em>{city}</em></div>
                     <div className="date">{dateBuilder(new Date())}</div>
@@ -37,7 +36,6 @@ const Result = props => {
                   <div className="pressure">Ciśnienie: {pressure} hPa</div>
                   <div className="wind">Wiatr: {wind} m/s</div>            
                 </div>
-                
             </div>
         )
     }
